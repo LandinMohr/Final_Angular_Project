@@ -1,12 +1,15 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
+
   {
     path: '',
     loadComponent: () =>
-      import('./features/home/home').then(m => m.Home),
+      import('./features/home/home')
+        .then(m => m.Home),
     title: 'Home'
   },
+
   {
     path: 'objects',
     loadComponent: () =>
@@ -14,6 +17,7 @@ export const routes: Routes = [
         .then(m => m.ObjectsList),
     title: 'Objects'
   },
+
   {
     path: 'objects/new',
     loadComponent: () =>
@@ -21,6 +25,7 @@ export const routes: Routes = [
         .then(m => m.ObjectForm),
     title: 'Create Object'
   },
+
   {
     path: 'objects/:id',
     loadComponent: () =>
@@ -28,6 +33,7 @@ export const routes: Routes = [
         .then(m => m.ObjectDetails),
     title: 'Object Details'
   },
+
   {
     path: 'objects/:id/edit',
     loadComponent: () =>
@@ -35,6 +41,7 @@ export const routes: Routes = [
         .then(m => m.ObjectForm),
     title: 'Edit Object'
   },
+
   {
     path: 'login',
     loadComponent: () =>
@@ -42,11 +49,21 @@ export const routes: Routes = [
         .then(m => m.Login),
     title: 'Login'
   },
+
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./features/auth/register/register')
+        .then(m => m.Register),
+    title: 'Register'
+  },
+
   {
     path: '**',
     loadComponent: () =>
       import('./shared/not-found/not-found')
         .then(m => m.NotFound),
-    title: '404 - Not Found'
+    title: 'Not Found'
   }
+
 ];

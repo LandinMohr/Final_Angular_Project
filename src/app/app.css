@@ -1,0 +1,35 @@
+.topbar {
+  background-color: #1976d2;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-buttons a {
+  color: white;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+}
+
+.nav-buttons a:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.active {
+  background-color: rgba(255,255,255,0.3);
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 40px;
+  min-height: calc(100vh - 60px);
+}
