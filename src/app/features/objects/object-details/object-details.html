@@ -1,1 +1,13 @@
-<p>object-details works!</p>
+
+@if (object()) {
+
+  <h2 class="text-2xl font-bold mb-4">Object Details</h2>
+
+  <p><strong>ID:</strong> {{ object()?.id }}</p>
+  <p><strong>Name:</strong> {{ object()?.name }}</p>
+
+  <pre class="bg-gray-100 p-3 mt-3">
+    {{ object()?.data | json }}
+  </pre>
+
+}

@@ -1,48 +1,96 @@
 <h1 class="text-3xl font-bold mb-6">Objects Inventory</h1>
 
-<div *ngIf="loading()" class="text-gray-600 mb-4">
-  Loading objects...
-</div>
+<button
+  routerLink="/objects/new"
+  class="bg-blue-600 text-white px-4 py-2 rounded mb-4 hover:bg-blue-700"
+>
+  + Create Object
+</button>
 
-<div *ngIf="error()" class="text-red-600 mb-4">
-  {{ error() }}
-</div>
+@if (loading()) {
+  <div class="text-gray-600 mb-4">
+    Loading objects...
+  </div>
+}
 
-<table *ngIf="!loading() && !error()" class="w-full border">
+@if (error()) {
+  <div class="text-red-600 mb-4">
+    {{ error() }}
+  </div>
+}
 
-  <thead class="bg-gray-100">
-    <tr>
-      <th class="p-2 text-left">ID</th>
-      <th class="p-2 text-left">Name</th>
-      <th class="p-2 text-left">Actions</th>
-    </tr>
-  </thead>
+@if (!loading() && paginatedObjects().length > 0) {
 
-  <tbody>
+  <table class="w-full border">
 
-    <tr *ngFor="let obj of objects()" class="border-t">
+    <thead class="bg-gray-100">
+      <tr>
+        <th class="p-2 text-left">ID</th>
+        <th class="p-2 text-left">Name</th>
+        <th class="p-2 text-left">Actions</th>
+      </tr>
+    </thead>
 
-      <td class="p-2">{{ obj.id }}</td>
-      <td class="p-2">{{ obj.name }}</td>
+    <tbody>
 
-      <td class="p-2 space-x-3">
+      @for (obj of paginatedObjects(); track obj.id) {
+        <tr class="border-t">
 
-        <a [routerLink]="['/objects', obj.id]" class="text-blue-600 hover:underline">
-          View
-        </a>
+          <td class="p-2">{{ obj.id }}</td>
+          <td class="p-2">{{ obj.name }}</td>
 
-        <a [routerLink]="['/objects', obj.id, 'edit']" class="text-green-600 hover:underline">
-          Edit
-        </a>
+          <td class="p-2 space-x-3">
 
-        <button (click)="deleteObject(obj.id!)" class="text-red-600 hover:underline">
-          Delete
-        </button>
+            <a [routerLink]="['/objects', obj.id]" class="text-blue-600 hover:underline">
+              View
+            </a>
 
-      </td>
+            <a [routerLink]="['/objects', obj.id, 'edit']" class="text-green-600 hover:underline">
+              Edit
+            </a>
 
-    </tr>
+            <button (click)="deleteObject(obj.id!)" class="text-red-600 hover:underline">
+              Delete
+            </button>
 
-  </tbody>
+          </td>
 
-</table>
+        </tr>
+      }
+
+    </tbody>
+
+  </table>
+
+  <!-- Pagination Controls -->
+  <div class="flex justify-between mt-4">
+    <button
+      (click)="prevPage()"
+      class="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+      [disabled]="page() === 1"
+    >
+      Previous
+    </button>
+
+    <span>Page {{ page() }} of {{ totalPages() }}</span>
+
+    <button
+      (click)="nextPage()"
+      class="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
+      [disabled]="page() * pageSize() >= objects().length"
+    >
+      Next
+    </button>
+  </div>
+
+}
+
+@if (!loading() && paginatedObjects().length === 0) {
+  <p class="text-gray-500">No objects found.</p>
+}
+
+@if (successMessage()) {
+  <div class="text-green-600 mt-4">
+    {{ successMessage() }}
+  </div>
+}

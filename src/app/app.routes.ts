@@ -2,30 +2,30 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
 
+  // Home page
   {
     path: '',
     loadComponent: () =>
-      import('./features/home/home')
-        .then(m => m.Home),
+      import('./features/home/home').then(m => m.Home),
     title: 'Home'
   },
 
+  // Create new object
   {
-    path: 'objects',
-    loadComponent: () =>
-      import('./features/objects/objects-list/objects-list')
-        .then(m => m.ObjectsList),
-    title: 'Objects'
-  },
+  path: 'objects/new',
+  loadComponent: () =>
+    import('./features/objects/object-create/object-create')
+      .then(m => m.ObjectCreate)
+},
 
-  {
-    path: 'objects/new',
-    loadComponent: () =>
-      import('./features/objects/object-form/object-form')
-        .then(m => m.ObjectForm),
-    title: 'Create Object'
-  },
+{
+  path: 'objects/:id/edit',
+  loadComponent: () =>
+    import('./features/objects/object-edit/object-edit')
+      .then(m => m.ObjectEdit)
+},
 
+  // View object details
   {
     path: 'objects/:id',
     loadComponent: () =>
@@ -34,30 +34,16 @@ export const routes: Routes = [
     title: 'Object Details'
   },
 
+  // List all objects
   {
-    path: 'objects/:id/edit',
+    path: 'objects',
     loadComponent: () =>
-      import('./features/objects/object-form/object-form')
-        .then(m => m.ObjectForm),
-    title: 'Edit Object'
+      import('./features/objects/objects-list/objects-list')
+        .then(m => m.ObjectsList),
+    title: 'Objects'
   },
 
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./features/auth/login/login')
-        .then(m => m.Login),
-    title: 'Login'
-  },
-
-  {
-    path: 'register',
-    loadComponent: () =>
-      import('./features/auth/register/register')
-        .then(m => m.Register),
-    title: 'Register'
-  },
-
+  // 404 fallback
   {
     path: '**',
     loadComponent: () =>

@@ -1,0 +1,55 @@
+<div class="max-w-md mx-auto p-6 bg-white shadow rounded-lg">
+
+  <h1 class="text-2xl font-bold mb-6 text-center">Create Object</h1>
+
+  @if (successMessage()) {
+    <p class="text-green-600 font-semibold mb-4">{{ successMessage() }}</p>
+  }
+
+  <form (ngSubmit)="submitForm()" class="space-y-4">
+
+    <div>
+      <label class="block font-medium">Object Name</label>
+      <input
+        type="text"
+        [ngModel]="name()"
+        (ngModelChange)="name.set($event)"
+        name="name"
+        class="w-full border p-2 rounded"
+        minlength="3"
+        required
+      />
+    </div>
+
+    <div class="mt-4">
+      <h2 class="font-semibold mb-2">Categories</h2>
+
+    @for (item of categories(); track item.key) {
+  <div class="flex gap-2 mb-2">
+
+    <input
+      type="text"
+      [ngModel]="item.key"
+      (ngModelChange)="updateKey($index, $event)"
+      placeholder="Category"
+      class="border p-1 rounded flex-1"
+    />
+
+    <input
+      type="text"
+      [ngModel]="item.value"
+      (ngModelChange)="updateValue($index, $event)"
+      placeholder="Value"
+      class="border p-1 rounded flex-1"
+    />
+
+    <button
+      type="button"
+      (click)="removeCategory($index)"
+      class="text-red-600"
+    >
+      ✕
+    </button>
+
+  </div>
+}

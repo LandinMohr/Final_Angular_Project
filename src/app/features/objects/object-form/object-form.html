@@ -1,1 +1,63 @@
-<p>object-form works!</p>
+<div class="max-w-md mx-auto p-6 bg-white shadow rounded-lg">
+
+  <h1 class="text-2xl font-bold mb-6 text-center">
+    Edit Object
+  </h1>
+
+  <form (ngSubmit)="submitForm()" class="space-y-4">
+
+    <div>
+      <label class="block font-medium">Name</label>
+      <input
+        type="text"
+       [ngModel]="name()"
+       (ngModelChange)="name.set($event)"
+        name="name"
+        class="w-full border p-2 rounded"
+        required
+        minlength="3"
+      />
+
+      @if (name().length > 0 && name().length < 3) {
+        <p class="text-red-500 text-sm">
+          Name must be at least 3 characters.
+        </p>
+      }
+    </div>
+
+    <div>
+      <label class="block font-medium">Color</label>
+      <input
+        type="text"
+        [ngModel]="color()"
+        (ngModelChange)="color.set($event)"
+        name="color"
+        class="w-full border p-2 rounded"
+        required
+      />
+    </div>
+
+    <div>
+      <label class="block font-medium">Price</label>
+      <input
+        type="number"
+        [ngModel]="price()"
+        (ngModelChange)="price.set($event)"
+        name="price"
+        class="w-full border p-2 rounded"
+        min="0"
+        required
+      />
+    </div>
+
+    <button
+      type="submit"
+      [disabled]="!isValid || submitting()"
+      class="bg-blue-600 text-white px-4 py-2 rounded disabled:opacity-50 w-full"
+    >
+      {{ submitting() ? 'Saving...' : 'Create Object' }}
+    </button>
+
+  </form>
+
+</div>
